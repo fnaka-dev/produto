@@ -1,0 +1,14 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Context.puml
+
+
+title System Context diagram for Sistema de Produtos
+
+Person(administrador, Administrador, "Um funcionario da empresa com acesso administrativo.")
+System(sistema_produto, "Sistema de Produtos", "Permite usuario manter as informacoes dos produtos.")
+
+Rel(administrador, sistema_produto, "Uses")
+
+@enduml

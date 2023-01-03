@@ -1,0 +1,30 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+!include DEVICONS/java.puml
+!include DEVICONS/mysql.puml
+!include FONTAWESOME/server.puml
+
+' LAYOUT_TOP_DOWN()
+' LAYOUT_AS_SKETCH()
+
+
+title Container diagram for Sistema de Produtos
+
+Person(administrador, Administrador, "Um funcionario da empresa com acesso administrativo.")
+
+System_Boundary(c1, "Sistema de Produtos") {
+    Container(web_app, "Web Application", "Java, Spring MVC", "Disponibiliza todas as funcionalidades do cadastro de produtos para administrador atraves de uma navegador", "java")
+    ContainerDb(database, "Database", "SQL Database", "Stores user registraion information, hased auth credentials, access logs, etc.", "mysql")
+    Container(backend_api, "API Application", "Java, Docker Container", "Disponibiliza as funcionalidades do Sistema de Produtos atraves de API", "server")
+}
+
+Rel(administrador, web_app, "Uses", "HTTPS")
+
+Rel(web_app, backend_api, "Uses", "JSON/HTTPS")
+Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC")
+
+@enduml
